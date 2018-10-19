@@ -8,6 +8,9 @@ import argparse
 # Argument parsing WIP
 
 def argument_parse():
+    if len(sys.argv) == 1:
+        return("lwc")
+
     option=""
     parser = argparse.ArgumentParser()
     parser.add_argument("-l", "--lines", help="print the newline counts", action="store_true")
