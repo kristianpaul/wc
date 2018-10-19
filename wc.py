@@ -3,12 +3,24 @@
 import sys
 import io
 import re
+import argparse
 
 # Argument parsing WIP
 
 def argument_parse():
-    if len(sys.argv) > 1:
-        print("usage: wc --help")
+    option=""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-l", "--lines", help="print the newline counts", action="store_true")
+    parser.add_argument("-w", "--words", help="print the newline counts", action="store_true")
+    parser.add_argument("-c", "--bytes", help="print the byte counts", action="store_true")
+    args = parser.parse_args()
+    if args.lines:
+        option=option+"l"
+    if args.words:
+        option=option+"w"
+    if args.bytes:
+        option=option+"c"
+    return option
 
 def input_parse(data_input):
     
@@ -22,14 +34,19 @@ def input_parse(data_input):
 
     return count_of_lines,count_of_words,count_of_bytes
 
-def print_wc_like_count(data_input):
-    try:
-        for  i in data_input:
-            print(i,end='\t')
-    finally:
-        print('\n')
+def print_wc_like_count(data_input,parameter):
+    if re.match('.*l.*', parameter):
+                    print(data_input[0],end='\t')
+
+    if re.match('.*w.*', parameter):
+                    print(data_input[1],end='\t')
+
+    if re.match('.*c.*', parameter):
+                    print(data_input[2],end='\t')
+    print('\n')
 
 #Use module as an script
 if __name__ == '__main__':
+    option=argument_parse()
     data_input=sys.stdin
-    print_wc_like_count(input_parse(data_input))
+    print_wc_like_count(input_parse(data_input),option)
