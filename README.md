@@ -4,6 +4,7 @@ This is just another gnu wc implementation in Python 3, it supports word, bytes 
 
 ```sh
 $ echo -e  "1\n2\n3 4" | ./wc.py
+3       4       8
 ```
 # testing
 
