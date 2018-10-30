@@ -5,6 +5,7 @@ import io
 import re
 import argparse
 import click
+import requests
 
 class wc:
     def __init__(self):
@@ -15,6 +16,11 @@ class wc:
     def input_parse(self, data_input):
         # Read standard input as a stream until EOF and get its length 
         self.input_read=data_input.read()
+
+    def input_parse_content(self, data_input):
+        # Read standard input as a stream until EOF and get its length 
+        self.input_read=(data_input.text)
+
 
     def count_newlines(self):
         # Count new line character 
@@ -49,14 +55,17 @@ class wc:
 @click.option('-c', '--bytes','cbytes' ,help='print the word counts',is_flag=True)
 @click.option('-l', '--lines',  help='print the newline counts',is_flag=True)
 @click.option('-w', '--words',  help='print the byte counts',is_flag=True)
+@click.option('-e', 'url',  help='print the word counts from a url')
  
-def read_parameters(cbytes,lines,words):
+def read_parameters(cbytes,lines,words,url):
     options = ""
 
     if lines:
         options = options + "l"
     if words:
         options = options + "w"
+    if url:
+        count_url(url,"w")
     if cbytes:
         options = options + "c"
     
@@ -65,6 +74,14 @@ def read_parameters(cbytes,lines,words):
     a_wc = wc()
     a_wc.input_parse(data_input)
     a_wc.print_wc_like_count(options)
+
+def count_url(link, options):
+    r = requests.get(link)
+
+    a_wc = wc()
+    a_wc.input_parse_content(r)
+    a_wc.print_wc_like_count(options)
+    sys.exit(0)
 
 #Use module as an script
 if __name__ == '__main__':
