@@ -23,35 +23,49 @@ def argument_parse():
         option=option+"c"
     return option
  
-class wc:    
+class wc:
+    def __init__(self):
+        self.count_of_lines = 0
+        self.count_of_words = 0
+        self.count_of_bytes = 0
    
     def input_parse(self, data_input):
-        
         # Read standard input as a stream until EOF and get its length 
-        input_read=data_input.read()
+        self.input_read=data_input.read()
+
+    def count_newlines(self):
         # Count new line character 
-        count_of_lines=(input_read.count("\n"))
+        self.count_of_lines=(self.input_read.count("\n"))
+
+    def count_words(self):
         # Count words from regex
-        count_of_words=len(re.findall('\S+', input_read))
-        count_of_bytes=len(input_read)
+        self.count_of_words=len(re.findall('\S+', self.input_read))
+
+    def count_bytes(self):
+        self.count_of_bytes=len(self.input_read)
     
-        return count_of_lines,count_of_words,count_of_bytes
-    
-    def print_wc_like_count(self, data_input,parameter):
+    def print_wc_like_count(self, parameter):
         if re.match('.*l.*', parameter):
-                        print(data_input[0],end='\t')
+                        self.count_newlines()
+                        print(str(self.count_of_lines),end='\t')
     
         if re.match('.*w.*', parameter):
-                        print(data_input[1],end='\t')
+                        self.count_words()
+                        print(str(self.count_of_words),end='\t')
     
         if re.match('.*c.*', parameter):
-                        print(data_input[2],end='\t')
+                        self.count_bytes()
+                        print(str(self.count_of_bytes),end='\t')
         print('\n')
     
     #Use module as an script
 if __name__ == '__main__':
     a_wc = wc()
+    # parse arguments (to be replaced with click)
     option = argument_parse()
+    # 
     data_input = sys.stdin
-    parsed_data = a_wc.input_parse(sys.stdin)
-    a_wc.print_wc_like_count(parsed_data,option)
+    #
+    parsed_data = a_wc.input_parse(data_input)
+    #
+    a_wc.print_wc_like_count(option)
