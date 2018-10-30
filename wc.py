@@ -44,41 +44,39 @@ class wc:
                         print(str(self.count_of_bytes),end='\t')
         print('\n')
 
-     # Argument
+# Argument parsing
 @click.command()
 @click.option('-c', '--bytes','cbytes' ,help='print the word counts',is_flag=True)
 @click.option('-l', '--lines',  help='print the newline counts',is_flag=True)
 @click.option('-w', '--words',  help='print the byte counts',is_flag=True)
  
 def read_parameters(cbytes,lines,words):
-    option = ""
+    options = ""
+
     if lines:
-        option = option + "l"
+        options = options + "l"
     if words:
-        option = option + "w"
+        options = options + "w"
     if cbytes:
-        option = option + "c"
-    return option
+        options = options + "c"
     
+    data_input = sys.stdin
+
+    a_wc = wc()
+    a_wc.input_parse(data_input)
+    a_wc.print_wc_like_count(options)
+
 #Use module as an script
 if __name__ == '__main__':
 
     data_input = sys.stdin
 
-
     a_wc = wc()
 
-    option = read_parameters()
-    print(option)
-
     if len(sys.argv) == 1:
-#        option = "lwc"
-        print("no args")
+        option = "lwc"
+        a_wc.input_parse(data_input)
+        a_wc.print_wc_like_count(option)
+        sys.exit(0)
 
-    #data_input = sys.stdin
-
-    a_wc.input_parse(data_input)
-
-    a_wc.print_wc_like_count(option)
-
-
+    read_parameters()
