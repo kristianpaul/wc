@@ -1,23 +1,20 @@
-# wc
+# Description
 
-This is just another gnu wc implementation in Python 3, it supports word, bytes and line count from standard input:
+This is just another gnu wc sample implementation in Python 3, it supports words, bytes and lines count from standard and urls, like:
 
 ```sh
 $ echo -e  "1\n2\n3 4" | ./wc.py
 3       4       8
 ```
-# testing
-
-Testing  main function can be executed as
-
 ```sh
-$ ./test.py 
-...
-----------------------------------------------------------------------
-Ran 3 tests in 0.001s
-
-OK
+$ ./wc.py -e  https://raw.githubusercontent.com/requests/requests/master/README.md
+400
 ```
 
-Python 3 is required to execute this scripts.
+# Testing
+
+Python 3 is required to execute and test wc.py.
  
+pip3 install -r requirements.txt
+
+Run pytest for unitesting
